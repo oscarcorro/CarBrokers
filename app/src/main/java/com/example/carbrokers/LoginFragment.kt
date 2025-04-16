@@ -42,7 +42,7 @@ class LoginFragment: Fragment() {
 
                 //cambiamos al siguiente fragment, reemplazándolo con otro de prueba
                 parentFragmentManager.commit{
-                    replace(R.id.fragmentContainerView, PlaceHolderFragment())
+                    replace(R.id.fragmentContainerView, CarListFragment())
                     addToBackStack(null) //opción de volver atrás con el botón
                 }
             }else{
