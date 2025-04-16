@@ -1,5 +1,6 @@
 package com.example.carbrokers
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -38,8 +39,33 @@ class CarAdapter (
         //precio del coche
         holder.carPrice.text = car.price
         //imagen del coche, cargandola con glide desde la URL
+        Log.d("Glide", "Cargando imagen: ${car.img}")
+        //Convertimos la marca a minúsculas para comparar
+        val marca = car.car.lowercase()
+        //Seleccionamos la imagen correspondiente según la marca
+        val imageRes = when {
+            "porsche" in marca -> R.drawable.porsche
+            "bmw" in marca -> R.drawable.bmw
+            "audi" in marca -> R.drawable.audi
+            "mercedes" in marca -> R.drawable.mercedes
+            "volkswagen" in marca -> R.drawable.volkswagen
+            "toyota" in marca -> R.drawable.toyota
+            "chevrolet" in marca -> R.drawable.chevrolet
+            "mitsubishi" in marca -> R.drawable.mitshubishi
+            "saturn" in marca -> R.drawable.saturn
+            "jeep" in marca -> R.drawable.jeep
+            "dodge" in marca -> R.drawable.dodge
+            "isuzu" in marca -> R.drawable.isuzu
+            "mazda" in marca -> R.drawable.mazda
+            "volvo" in marca -> R.drawable.volvo
+            "gmc" in marca -> R.drawable.gmc
+            "cadillac" in marca -> R.drawable.cadillac
+            "ford" in marca -> R.drawable.ford
+            else -> R.drawable.placeholder_image //imagen por defecto
+        }
+        // Cargamos la imagen local desde drawable
         Glide.with(holder.itemView.context)
-            .load(car.img)
+            .load(imageRes)
             .into(holder.carImage)
         //Manejar clic en el coche
         holder.itemView.setOnClickListener{

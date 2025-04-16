@@ -7,5 +7,5 @@ class Car (
     val car_color: String,
     val car_model_year: Int,
     val price: String,
-    val img: String
+    var img: String
 )
