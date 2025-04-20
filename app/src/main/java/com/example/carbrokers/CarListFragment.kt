@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +48,14 @@ class CarListFragment: Fragment() {
         //obtenemos el recyclerview
         recyclerView = view.findViewById(R.id.recycleCars)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        val botonVerFavoritos = view.findViewById<Button>(R.id.botonVerFavoritos)
+        botonVerFavoritos.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainerView, FavoritesFragment())
+                .addToBackStack(null) // Para poder volver atrás
+                .commit()
+        }
+
 
         //cargar los coches desde la API
         fetchCarData()

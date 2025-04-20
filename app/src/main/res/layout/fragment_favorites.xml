@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Título de favoritos -->
+    <TextView
+        android:id="@+id/textTitleFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Coches favoritos"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Lista de coches favoritos -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerFavorites"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textTitleFavorites"
+        android:layout_marginTop="10dp"
+        android:padding="8dp"/>
+
+    <!-- Texto en caso de no haber coches favoritos -->
+    <TextView
+        android:id="@+id/textNoFavorites"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No tienes coches favoritos"
+        android:textSize="16sp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>
