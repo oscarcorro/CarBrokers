@@ -48,6 +48,15 @@
             android:id="@+id/textColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <!-- Boton para añadir a favotiros -->
+        <Button
+            android:id="@+id/botonAddToFavorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Añadir a favoritos"
+            android:layout_marginTop="16dp"
+            />
         
     </LinearLayout>
 

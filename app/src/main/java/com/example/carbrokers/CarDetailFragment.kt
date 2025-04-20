@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class CarDetailFragment : Fragment() {
 
@@ -38,8 +43,10 @@ class CarDetailFragment : Fragment() {
         val textPrice = view.findViewById<TextView>(R.id.textPriceDetail)
         val textYear = view.findViewById<TextView>(R.id.textYear)
         val textColor = view.findViewById<TextView>(R.id.textColor)
+        //botón para añadir a favoritos
+        val btnFav = view.findViewById<Button>(R.id.botonAddToFavorites)
 
-        // Si hay coche recibido, lo mostramos
+        //Si hay coche recibido, lo mostramos
         selectedCar?.let { car ->
             textTitle.text = "${car.car} ${car.car_model}"
             textPrice.text = "Precio: ${car.price}"
@@ -72,6 +79,28 @@ class CarDetailFragment : Fragment() {
             Glide.with(requireContext())
                 .load(imageRes)
                 .into(imageView)
+
+            //al pulsar botn favoritos, se añade
+            btnFav.setOnClickListener {
+                val favorite = FavoriteCar(
+                    id = car.id,
+                    car = car.car,
+                    car_model = car.car_model,
+                    car_color = car.car_color,
+                    car_model_year = car.car_model_year,
+                    price = car.price,
+                    img = car.img
+                )
+
+                //meter en facvoritos con Room
+                CoroutineScope(Dispatchers.IO).launch {
+                    val db = AppDatabase.getDatabase(requireContext())
+                    db.favoriteCarDao().insertFavorite(favorite)
+                }
+
+                //mensaje de confirmación
+                Toast.makeText(requireContext(), "Añadido a favoritos", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

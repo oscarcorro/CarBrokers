@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 @Database(entities = [FavoriteCar::class], version=1) //definimos las tablas y la versión de la BD
 abstract class AppDatabase : RoomDatabase() {
     //generar el DAO para favoritos
-    abstract fun favoriteCarDat(): FavoriteCarDao
+    abstract fun favoriteCarDao(): FavoriteCarDao
     companion object{
         @Volatile
         private var INSTANCE: AppDatabase? = null
