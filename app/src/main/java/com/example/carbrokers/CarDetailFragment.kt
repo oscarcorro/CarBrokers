@@ -1,59 +1,77 @@
 package com.example.carbrokers
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CarDetailFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CarDetailFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    // Variable donde guardaremos el coche recibido
+    private var selectedCar: Car? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
+        // Recuperamos el coche enviado desde el fragmento anterior
+        selectedCar = arguments?.getSerializable("car") as? Car
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_car_detail, container, false)
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CarDetailFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CarDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Obtenemos las vistas del layout
+        val imageView = view.findViewById<ImageView>(R.id.imageCarDetail)
+        val textTitle = view.findViewById<TextView>(R.id.textTitleDetail)
+        val textPrice = view.findViewById<TextView>(R.id.textPriceDetail)
+        val textYear = view.findViewById<TextView>(R.id.textYear)
+        val textColor = view.findViewById<TextView>(R.id.textColor)
+
+        // Si hay coche recibido, lo mostramos
+        selectedCar?.let { car ->
+            textTitle.text = "${car.car} ${car.car_model}"
+            textPrice.text = "Precio: ${car.price}"
+            textYear.text = "Año: ${car.car_model_year}"
+            textColor.text = "Color: ${car.car_color}"
+
+            // Cargar la misma imagen que usábamos en el RecyclerView
+            val marca = car.car.lowercase()
+            val imageRes = when {
+                "porsche" in marca -> R.drawable.porsche
+                "bmw" in marca -> R.drawable.bmw
+                "audi" in marca -> R.drawable.audi
+                "mercedes" in marca -> R.drawable.mercedes
+                "volkswagen" in marca -> R.drawable.volkswagen
+                "toyota" in marca -> R.drawable.toyota
+                "chevrolet" in marca -> R.drawable.chevrolet
+                "mitsubishi" in marca -> R.drawable.mitshubishi
+                "saturn" in marca -> R.drawable.saturn
+                "jeep" in marca -> R.drawable.jeep
+                "dodge" in marca -> R.drawable.dodge
+                "isuzu" in marca -> R.drawable.isuzu
+                "mazda" in marca -> R.drawable.mazda
+                "volvo" in marca -> R.drawable.volvo
+                "gmc" in marca -> R.drawable.gmc
+                "cadillac" in marca -> R.drawable.cadillac
+                "ford" in marca -> R.drawable.ford
+                else -> R.drawable.placeholder_image
             }
+
+            Glide.with(requireContext())
+                .load(imageRes)
+                .into(imageView)
+        }
     }
 }

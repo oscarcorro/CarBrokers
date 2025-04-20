@@ -1,11 +1,13 @@
 package com.example.carbrokers
 
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.w3c.dom.Text
@@ -68,8 +70,20 @@ class CarAdapter (
             .load(imageRes)
             .into(holder.carImage)
         //Manejar clic en el coche
-        holder.itemView.setOnClickListener{
-            onItemClick(car)
+        holder.itemView.setOnClickListener {
+            val fragment = CarDetailFragment()
+
+            // Preparamos el coche para pasarlo al nuevo fragmento
+            val bundle = Bundle()
+            bundle.putSerializable("car", car)
+            fragment.arguments = bundle
+
+            // Iniciamos el fragmento desde el contexto del holder
+            val activity = holder.itemView.context as? AppCompatActivity
+            activity?.supportFragmentManager?.beginTransaction()
+                ?.replace(R.id.fragmentContainerView, fragment)
+                ?.addToBackStack(null)
+                ?.commit()
         }
     }
 

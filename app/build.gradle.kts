@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    id("org.jetbrains.kotlin.kapt") //para poder usar kapt con room
 }
 
 android {
@@ -52,4 +53,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     //Glide para obtener la imagen a través de una url
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    //base de datos room
+    implementation("androidx.room:room-runtime:2.6.1")
+    kapt("androidx.room:room-compiler:2.6.1")
 }
